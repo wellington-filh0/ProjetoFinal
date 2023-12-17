@@ -6,8 +6,18 @@
 </head>
 
 <body>
+	
+	<nav th:fragment="menuHome"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+		<div class="nav-wrapper container">
+			<a href="/" class="brand-logo">KeySync PRO</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="/KeySync/LoginAdm">Área Administrador</a></li>
+				<li><a href="/KeySync/LoginProfessor">Área Professor</a></li>
+			</ul>
+		</div>
+	</nav>
 
-	<nav th:fragment="menu"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+	<nav th:fragment="menuAdm"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
 		<div>
 			<a href="/" class="brand-logo">KeySync PRO</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -20,6 +30,17 @@
 			</ul>
 		</div>
 	</nav>
+	
+	<nav th:fragment="menuProf"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+		<div class="nav-wrapper container">
+			<a href="/" class="brand-logo">KeySync PRO</a>
+			<ul id="nav-mobile" class="right hide-on-med-and-down">
+				<li><a href="">Laboratórios</a></li>
+				<li><a href="">Chaves</a></li>
+				<li><a href="">Agendamento</a></li>
+			</ul>
+		</div>
+	</nav>		
 
 </body>
 
