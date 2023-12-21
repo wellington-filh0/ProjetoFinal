@@ -179,5 +179,20 @@ public class KeySyncController {
 		return md;
 
 	}
+	
+	// APAGANDO CHAVE
+
+		@GetMapping("/administrador/removerChave/{id}")
+		public String apagarChave(@PathVariable Long id, RedirectAttributes attributes) {
+			Optional<Chave> opt = cr.findById(id);
+			Chave chave = opt.get();
+
+			if (!opt.isEmpty()) {
+				cr.delete(chave);
+				attributes.addFlashAttribute("mensagem", "Chave removida com sucesso!");
+			}
+
+			return "redirect:/administrador/chaves";
+		}
 
 }
