@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>KeySync Pro</title>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+
+	<div th:replace="~{menu :: menuAdm}"></div>
+
+	<div class="container">
+		<h1>Laboratórios</h1>
+
+		<p th:if="${mensagem}" th:text="${mensagem}"></p>
+		
+		<table class="highlight">
+			
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Disciplina</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="l : ${laboratorios}"> <!--Isso representa uma repetição "for" que vai repetir a quantidade de objetos que eu tiver na minha lista chamada de alunos--> 
+					<td th:text="${l.id}">1</td> <!-- O valor dos elementos serão substituidos pelo valor que está no banco de dados -->
+					<td th:text="${l.disciplina}">Stephany</td>
+					
+					<td>
+						<a > <i class="material-icons">edit</i></a>
+						<a > <i class="material-icons">delete</i></a>
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+
+	</div>
+</body>
+
+</html>
