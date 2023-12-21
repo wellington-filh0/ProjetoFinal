@@ -8,8 +8,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import ProjetoFinal.pi.KeySync.Models.Chave;
 import ProjetoFinal.pi.KeySync.Models.Laboratorio;
+import ProjetoFinal.pi.KeySync.Models.Professor;
 import ProjetoFinal.pi.KeySync.Repositories.ChaveRepository;
 import ProjetoFinal.pi.KeySync.Repositories.LaboratorioRepository;
+import ProjetoFinal.pi.KeySync.Repositories.ProfessorRepository;
 
 @Controller
 public class KeySyncController {
@@ -18,6 +20,8 @@ public class KeySyncController {
 	private LaboratorioRepository lr;
 	@Autowired
 	private ChaveRepository cr;
+	@Autowired
+	private ProfessorRepository pr;
 
 	// FAZENDO LOGIN DE UM ADM
 
@@ -75,6 +79,21 @@ public class KeySyncController {
 		cr.save(chave);
 		attributes.addFlashAttribute("mensagem", "Chave cadastrada com sucesso!");
 		return "redirect:/administrador/adicionarChave";
+	}
+	
+	//ADICIONANDO PROFESSOR
+	
+	@GetMapping("/administrador/adicionarProfessor")
+	private String adicionarProfessor(Professor professor) {
+		return "KeySync/FormProfessor";
+	}
+	
+	@PostMapping("/administrador/adicionarProfessor")
+	private String adicionarProfessor(Long idProfessor, Professor professor, RedirectAttributes attributes) {
+		System.out.println(professor);
+		pr.save(professor);
+		attributes.addFlashAttribute("mensagem", "Professor cadastrado com sucesso!");
+		return "redirect:/administrador/adicionarProfessor";
 	}
 	
 
