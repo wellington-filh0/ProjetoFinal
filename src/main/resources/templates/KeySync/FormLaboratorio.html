@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>KeySync Pro</title>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+	
+	<div th:replace="~{menu :: menuAdm}"></div>
+	
+	<div class="container">
+		
+		<p th:if="${mensagem}" th:text="${mensagem}"></p>
+		
+		<h1>Adicionar Laboratório</h1>
+		
+		<form action="/administrador/adicionarLaboratorio" method="post" th:object="${laboratorio}">
+			
+			<div>
+				<input type="hidden" th:field="*{id}" readonly="readonly">
+			</div>
+			<div>
+				<label>Disciplina</label> <input type="text" th:field="*{disciplina}" required>
+			</div>
+			<div>
+				<button class="waves-effect waves-light btn" type="submit">Salvar</button>
+				<button class="waves-effect waves-light btn" type="reset">Limpar</button>
+			</div>
+			
+		</form>
+		
+	</div>
+
+</body>
+
+</html>

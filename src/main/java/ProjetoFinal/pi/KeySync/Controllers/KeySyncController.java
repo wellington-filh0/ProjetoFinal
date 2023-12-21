@@ -1,10 +1,19 @@
 package ProjetoFinal.pi.KeySync.Controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import ProjetoFinal.pi.KeySync.Models.Laboratorio;
+import ProjetoFinal.pi.KeySync.Repositories.LaboratorioRepository;
 
 @Controller
 public class KeySyncController {
+	
+	@Autowired // Define automaticamente a variável abaixo como um objeto
+	private LaboratorioRepository lr;
 
 	// FAZENDO LOGIN DE UM ADM
 
@@ -32,6 +41,21 @@ public class KeySyncController {
 	@GetMapping("/professor")
 	public String AreaProf() {
 		return "KeySync/Professor";
+	}
+	
+	//ADICIONANDO LABORATÓRIO
+	
+	@GetMapping("/administrador/adicionarLaboratorio")
+	public String adicionarLaboratorio(Laboratorio laboratorio) {
+		return "KeySync/FormLaboratorio";
+	}
+	
+	@PostMapping("/administrador/adicionarLaboratorio")
+	private String adicionarLaboratorio(Long idLaboratorio, Laboratorio laboratorio, RedirectAttributes attributes) {
+		System.out.println(laboratorio);
+		lr.save(laboratorio);
+		attributes.addFlashAttribute("mensagem", "Laboratório cadastrado com sucesso!");
+		return "redirect:/administrador/adicionarLaboratorio";
 	}
 
 }
