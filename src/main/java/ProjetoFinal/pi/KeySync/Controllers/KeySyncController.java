@@ -1,10 +1,12 @@
 package ProjetoFinal.pi.KeySync.Controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -108,6 +110,42 @@ public class KeySyncController {
 		ModelAndView mv = new ModelAndView("KeySync/Laboratorios");
 		mv.addObject("laboratorios", laboratorios);
 		return mv;
+	}
+	
+	//EDITANDO LABORATÓRIO
+	
+	@GetMapping("/administrador/selecionarLaboratorio/{id}")
+	public ModelAndView selecionarLaboratorio(@PathVariable Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Laboratorio> opt = lr.findById(id);
+
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/KeySync/Laboratorios");
+			return md;
+		}
+
+		Laboratorio laboratorio = opt.get();
+
+		md.setViewName("KeySync/FormLaboratorio");
+		md.addObject("laboratorio", laboratorio);
+
+		return md;
+
+	}
+	
+	//APAGANDO LABORATÓRIO
+	
+	@GetMapping("/administrador/removerLaboratorio/{id}")
+	public String apagarLaboratorio(@PathVariable Long id, RedirectAttributes attributes) {
+		Optional<Laboratorio> opt = lr.findById(id);
+		Laboratorio laboratorio = opt.get();
+
+		if (!opt.isEmpty()) {
+			lr.delete(laboratorio);
+			attributes.addFlashAttribute("mensagem", "Laboratorio removido com sucesso!");
+		}
+
+		return "redirect:/administrador/laboratorios";
 	}
 
 }
