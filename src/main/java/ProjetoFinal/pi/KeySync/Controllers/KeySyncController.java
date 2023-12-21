@@ -252,5 +252,17 @@ public class KeySyncController {
 		mv.addObject("laboratorios", laboratorios);
 		return mv;
 	}
+	
+	// LISTANDO CHAVES PARA PROFESSORES
+
+		@GetMapping("/professor/chaves")
+		private ModelAndView listarChavesParaProf() {
+
+			List<Chave> chaves = cr.findAll();
+			ModelAndView mv = new ModelAndView("KeySync/ChavesParaProf");
+			mv.addObject("chaves", chaves);
+			return mv;
+		}
+
 
 }
