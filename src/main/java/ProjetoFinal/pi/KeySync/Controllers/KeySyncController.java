@@ -194,5 +194,52 @@ public class KeySyncController {
 
 			return "redirect:/administrador/chaves";
 		}
+		
+		// LISTANDO PROFESSORES
+
+		@GetMapping("/administrador/professores")
+		private ModelAndView listarProfessores() {
+
+			List<Professor> professores = pr.findAll();
+			ModelAndView mv = new ModelAndView("KeySync/Professores");
+			mv.addObject("professores", professores);
+			return mv;
+		}
+		
+		// EDITANDO PROFESSOR
+
+		@GetMapping("/administrador/selecionarProfessor/{id}")
+		public ModelAndView selecionarProfessor(@PathVariable Long id) {
+			ModelAndView md = new ModelAndView();
+			Optional<Professor> opt = pr.findById(id);
+
+			if (opt.isEmpty()) {
+				md.setViewName("redirect:/KeySync/Professores");
+				return md;
+			}
+
+			Professor professor = opt.get();
+
+			md.setViewName("KeySync/FormProfessor");
+			md.addObject("professor", professor);
+
+			return md;
+
+		}
+		
+		// APAGANDO PROFESSOR
+
+				@GetMapping("/administrador/removerProfessor/{id}")
+				public String apagarProfessor(@PathVariable Long id, RedirectAttributes attributes) {
+					Optional<Professor> opt = pr.findById(id);
+					Professor professor = opt.get();
+
+					if (!opt.isEmpty()) {
+						pr.delete(professor);
+						attributes.addFlashAttribute("mensagem", "Professor removido com sucesso!");
+					}
+
+					return "redirect:/administrador/professores";
+				}
 
 }

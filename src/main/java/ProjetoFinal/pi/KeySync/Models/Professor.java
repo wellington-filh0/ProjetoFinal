@@ -15,6 +15,7 @@ public class Professor {
 	private String login;
 	private String senha;
 	private String disciplina;
+	
 	public Long getId() {
 		return id;
 	}
