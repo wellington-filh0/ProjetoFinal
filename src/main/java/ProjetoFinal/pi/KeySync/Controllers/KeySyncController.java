@@ -179,67 +179,78 @@ public class KeySyncController {
 		return md;
 
 	}
-	
+
 	// APAGANDO CHAVE
 
-		@GetMapping("/administrador/removerChave/{id}")
-		public String apagarChave(@PathVariable Long id, RedirectAttributes attributes) {
-			Optional<Chave> opt = cr.findById(id);
-			Chave chave = opt.get();
+	@GetMapping("/administrador/removerChave/{id}")
+	public String apagarChave(@PathVariable Long id, RedirectAttributes attributes) {
+		Optional<Chave> opt = cr.findById(id);
+		Chave chave = opt.get();
 
-			if (!opt.isEmpty()) {
-				cr.delete(chave);
-				attributes.addFlashAttribute("mensagem", "Chave removida com sucesso!");
-			}
-
-			return "redirect:/administrador/chaves";
+		if (!opt.isEmpty()) {
+			cr.delete(chave);
+			attributes.addFlashAttribute("mensagem", "Chave removida com sucesso!");
 		}
-		
-		// LISTANDO PROFESSORES
 
-		@GetMapping("/administrador/professores")
-		private ModelAndView listarProfessores() {
+		return "redirect:/administrador/chaves";
+	}
 
-			List<Professor> professores = pr.findAll();
-			ModelAndView mv = new ModelAndView("KeySync/Professores");
-			mv.addObject("professores", professores);
-			return mv;
-		}
-		
-		// EDITANDO PROFESSOR
+	// LISTANDO PROFESSORES
 
-		@GetMapping("/administrador/selecionarProfessor/{id}")
-		public ModelAndView selecionarProfessor(@PathVariable Long id) {
-			ModelAndView md = new ModelAndView();
-			Optional<Professor> opt = pr.findById(id);
+	@GetMapping("/administrador/professores")
+	private ModelAndView listarProfessores() {
 
-			if (opt.isEmpty()) {
-				md.setViewName("redirect:/KeySync/Professores");
-				return md;
-			}
+		List<Professor> professores = pr.findAll();
+		ModelAndView mv = new ModelAndView("KeySync/Professores");
+		mv.addObject("professores", professores);
+		return mv;
+	}
 
-			Professor professor = opt.get();
+	// EDITANDO PROFESSOR
 
-			md.setViewName("KeySync/FormProfessor");
-			md.addObject("professor", professor);
+	@GetMapping("/administrador/selecionarProfessor/{id}")
+	public ModelAndView selecionarProfessor(@PathVariable Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Professor> opt = pr.findById(id);
 
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/KeySync/Professores");
 			return md;
-
 		}
-		
-		// APAGANDO PROFESSOR
 
-				@GetMapping("/administrador/removerProfessor/{id}")
-				public String apagarProfessor(@PathVariable Long id, RedirectAttributes attributes) {
-					Optional<Professor> opt = pr.findById(id);
-					Professor professor = opt.get();
+		Professor professor = opt.get();
 
-					if (!opt.isEmpty()) {
-						pr.delete(professor);
-						attributes.addFlashAttribute("mensagem", "Professor removido com sucesso!");
-					}
+		md.setViewName("KeySync/FormProfessor");
+		md.addObject("professor", professor);
 
-					return "redirect:/administrador/professores";
-				}
+		return md;
+
+	}
+
+	// APAGANDO PROFESSOR
+
+	@GetMapping("/administrador/removerProfessor/{id}")
+	public String apagarProfessor(@PathVariable Long id, RedirectAttributes attributes) {
+		Optional<Professor> opt = pr.findById(id);
+		Professor professor = opt.get();
+
+		if (!opt.isEmpty()) {
+			pr.delete(professor);
+			attributes.addFlashAttribute("mensagem", "Professor removido com sucesso!");
+		}
+
+		return "redirect:/administrador/professores";
+	}
+
+	// LISTANDO LABORATÓRIOS PARA PROFESSORES
+
+	@GetMapping("/professor/laboratorios")
+	private ModelAndView listarLaboratoriosParaProf() {
+
+		List<Laboratorio> laboratorios = lr.findAll();
+		ModelAndView mv = new ModelAndView("KeySync/LaboratoriosParaProf");
+		mv.addObject("laboratorios", laboratorios);
+		return mv;
+	}
 
 }
