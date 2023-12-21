@@ -20,7 +20,7 @@ import ProjetoFinal.pi.KeySync.Repositories.ProfessorRepository;
 
 @Controller
 public class KeySyncController {
-	
+
 	@Autowired // Define automaticamente a variável abaixo como um objeto
 	private LaboratorioRepository lr;
 	@Autowired
@@ -55,14 +55,14 @@ public class KeySyncController {
 	public String AreaProf() {
 		return "KeySync/Professor";
 	}
-	
-	//ADICIONANDO LABORATÓRIO
-	
+
+	// ADICIONANDO LABORATÓRIO
+
 	@GetMapping("/administrador/adicionarLaboratorio")
 	public String adicionarLaboratorio(Laboratorio laboratorio) {
 		return "KeySync/FormLaboratorio";
 	}
-	
+
 	@PostMapping("/administrador/adicionarLaboratorio")
 	private String adicionarLaboratorio(Long idLaboratorio, Laboratorio laboratorio, RedirectAttributes attributes) {
 		System.out.println(laboratorio);
@@ -70,14 +70,14 @@ public class KeySyncController {
 		attributes.addFlashAttribute("mensagem", "Laboratório cadastrado com sucesso!");
 		return "redirect:/administrador/adicionarLaboratorio";
 	}
-	
-	//ADICIONANDO CHAVE
-	
+
+	// ADICIONANDO CHAVE
+
 	@GetMapping("/administrador/adicionarChave")
 	private String adicionarChave(Chave chave) {
 		return "KeySync/FormChave";
 	}
-	
+
 	@PostMapping("/administrador/adicionarChave")
 	private String adicionarChave(Long idChave, Chave chave, RedirectAttributes attributes) {
 		System.out.println(chave);
@@ -85,14 +85,14 @@ public class KeySyncController {
 		attributes.addFlashAttribute("mensagem", "Chave cadastrada com sucesso!");
 		return "redirect:/administrador/adicionarChave";
 	}
-	
-	//ADICIONANDO PROFESSOR
-	
+
+	// ADICIONANDO PROFESSOR
+
 	@GetMapping("/administrador/adicionarProfessor")
 	private String adicionarProfessor(Professor professor) {
 		return "KeySync/FormProfessor";
 	}
-	
+
 	@PostMapping("/administrador/adicionarProfessor")
 	private String adicionarProfessor(Long idProfessor, Professor professor, RedirectAttributes attributes) {
 		System.out.println(professor);
@@ -100,20 +100,20 @@ public class KeySyncController {
 		attributes.addFlashAttribute("mensagem", "Professor cadastrado com sucesso!");
 		return "redirect:/administrador/adicionarProfessor";
 	}
-	
-	//LISTANDO LABORATÓRIOS
-	
+
+	// LISTANDO LABORATÓRIOS
+
 	@GetMapping("/administrador/laboratorios")
 	private ModelAndView listarLaboratorios() {
-		
+
 		List<Laboratorio> laboratorios = lr.findAll();
 		ModelAndView mv = new ModelAndView("KeySync/Laboratorios");
 		mv.addObject("laboratorios", laboratorios);
 		return mv;
 	}
-	
-	//EDITANDO LABORATÓRIO
-	
+
+	// EDITANDO LABORATÓRIO
+
 	@GetMapping("/administrador/selecionarLaboratorio/{id}")
 	public ModelAndView selecionarLaboratorio(@PathVariable Long id) {
 		ModelAndView md = new ModelAndView();
@@ -132,9 +132,9 @@ public class KeySyncController {
 		return md;
 
 	}
-	
-	//APAGANDO LABORATÓRIO
-	
+
+	// APAGANDO LABORATÓRIO
+
 	@GetMapping("/administrador/removerLaboratorio/{id}")
 	public String apagarLaboratorio(@PathVariable Long id, RedirectAttributes attributes) {
 		Optional<Laboratorio> opt = lr.findById(id);
@@ -146,6 +146,38 @@ public class KeySyncController {
 		}
 
 		return "redirect:/administrador/laboratorios";
+	}
+
+	// LISTANDO CHAVES
+
+	@GetMapping("/administrador/chaves")
+	private ModelAndView listarChaves() {
+
+		List<Chave> chaves = cr.findAll();
+		ModelAndView mv = new ModelAndView("KeySync/Chaves");
+		mv.addObject("chaves", chaves);
+		return mv;
+	}
+
+	// EDITANDO CHAVE
+
+	@GetMapping("/administrador/selecionarChave/{id}")
+	public ModelAndView selecionarChave(@PathVariable Long id) {
+		ModelAndView md = new ModelAndView();
+		Optional<Chave> opt = cr.findById(id);
+
+		if (opt.isEmpty()) {
+			md.setViewName("redirect:/KeySync/Chaves");
+			return md;
+		}
+
+		Chave chave = opt.get();
+
+		md.setViewName("KeySync/FormChave");
+		md.addObject("chave", chave);
+
+		return md;
+
 	}
 
 }
