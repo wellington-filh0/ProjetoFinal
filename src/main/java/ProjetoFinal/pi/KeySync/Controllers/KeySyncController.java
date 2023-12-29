@@ -8,12 +8,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import ProjetoFinal.pi.KeySync.Models.Agendamento;
 import ProjetoFinal.pi.KeySync.Models.Chave;
 import ProjetoFinal.pi.KeySync.Models.Laboratorio;
 import ProjetoFinal.pi.KeySync.Models.Professor;
+import ProjetoFinal.pi.KeySync.Repositories.AgendamentoRepositoty;
 import ProjetoFinal.pi.KeySync.Repositories.ChaveRepository;
 import ProjetoFinal.pi.KeySync.Repositories.LaboratorioRepository;
 import ProjetoFinal.pi.KeySync.Repositories.ProfessorRepository;
@@ -27,6 +30,9 @@ public class KeySyncController {
 	private ChaveRepository cr;
 	@Autowired
 	private ProfessorRepository pr;
+	@Autowired
+	private AgendamentoRepositoty ar;
+	
 
 	// FAZENDO LOGIN DE UM ADM
 
@@ -252,17 +258,32 @@ public class KeySyncController {
 		mv.addObject("laboratorios", laboratorios);
 		return mv;
 	}
-	
+
 	// LISTANDO CHAVES PARA PROFESSORES
 
-		@GetMapping("/professor/chaves")
-		private ModelAndView listarChavesParaProf() {
+	@GetMapping("/professor/chaves")
+	private ModelAndView listarChavesParaProf() {
 
-			List<Chave> chaves = cr.findAll();
-			ModelAndView mv = new ModelAndView("KeySync/ChavesParaProf");
-			mv.addObject("chaves", chaves);
-			return mv;
-		}
+		List<Chave> chaves = cr.findAll();
+		ModelAndView mv = new ModelAndView("KeySync/ChavesParaProf");
+		mv.addObject("chaves", chaves);
+		return mv;
+	}
+	
+	// ADICIONANDO AGENDAMENTO
 
+	@RequestMapping("/professor/agendamento") 
+		public String agendamento() {
+		return "KeySync/agendamento";
+		
+	}
 
+	@PostMapping("/professor")
+	public String adicionar(Agendamento agendamento) {
+		
+		System.out.println(agendamento);
+		ar.save(agendamento);
+		return "KeySync/agendamento-adicionado";
+	}
+	
 }
