@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>KeySync Pro - Lista de Agendamentos</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+</head>
+
+<body>
+
+	<div th:replace="~{menu :: menuProf}"></div>
+
+	<div class="container">
+		<h1>Lista de Agendamentos</h1>
+		<table>
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Professor</th>
+					<th>Laboratório</th>
+					<th>Data</th>
+					<th>Horário</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="a : ${agendamentos}">
+					<td th:text="${a.id}">1</td>
+					<td th:text="${a.professor}">Felipe</td>
+					<td th:text="${a.laboratorio}">Física</td>
+					<td th:text="${a.data}">29/12/2023</td>
+					<td th:text="${a.horario}">20:00</td>
+					<td><a th:href="@{/agendamentos/{id}/remover(id=${a.id})}"><i class="material-icons">delete</i></a></td>
+				</tr>
+
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+
+</html>
