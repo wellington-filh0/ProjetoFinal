@@ -32,7 +32,6 @@ public class KeySyncController {
 	private ProfessorRepository pr;
 	@Autowired
 	private AgendamentoRepositoty ar;
-	
 
 	// FAZENDO LOGIN DE UM ADM
 
@@ -269,21 +268,42 @@ public class KeySyncController {
 		mv.addObject("chaves", chaves);
 		return mv;
 	}
-	
+
 	// ADICIONANDO AGENDAMENTO
 
-	@RequestMapping("/professor/agendamento") 
-		public String agendamento() {
+	@RequestMapping("/professor/agendamento")
+	public String agendamento() {
 		return "KeySync/agendamento";
-		
+
 	}
 
 	@PostMapping("/professor")
 	public String adicionar(Agendamento agendamento) {
-		
+
 		System.out.println(agendamento);
 		ar.save(agendamento);
 		return "KeySync/agendamento-adicionado";
 	}
-	
+
+	// LISTANDO AGENDAMENTO
+	@GetMapping("/KeySync/lista")
+	public ModelAndView listarA() {
+		List<Agendamento> agendamentos = ar.findAll();
+		ModelAndView mv = new ModelAndView("/KeySync/lista");
+		mv.addObject("agendamentos", agendamentos);
+		return mv;
+	}
+
+	// APAGANDO AGENDAMENTO
+	@GetMapping("agendamentos/{id}/remover")
+	public String apagarAgendamento(@PathVariable Long id) {
+		Optional<Agendamento> opt = ar.findById(id);
+
+		if (!opt.isEmpty()) {
+			Agendamento agendamento = opt.get();
+			ar.delete(agendamento);
+		}
+		return "redirect:/KeySync/lista";
+	}
+
 }
