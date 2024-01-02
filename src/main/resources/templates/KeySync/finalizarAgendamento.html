@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>KeySync Pro</title>
+	<!-- Compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+	<div th:replace="~{menu :: menu}"></div>
+
+	<div class="container">
+		<h1>Finalizar Agendamento</h1>
+		
+		<p th:if="${mensagem}" th:text="${mensagem}"></p>
+
+		<form action="/professor/finalizarAgendamento/{id}" method="post">
+
+
+			<div>
+				<label>Id do Agendamento</label> <input type="number" name="id" required>
+			</div>
+			<div>
+				<button class="waves-effect waves-light btn" type="submit">Salvar</button>
+				<button class="waves-effect waves-light btn" type="reset">Limpar</button>
+			</div>
+
+		</form>
+	</div>
+
+	<div class="container">
+		<h1>Lista de Agendamentos</h1>
+
+		<table>
+
+			<thead>
+				<tr>
+					<th>Professor</th>
+					<th>Laboratório</th>
+					<th>Chave</th>
+					<th>Data do Agendamento</th>
+					<th>Horário do Agendamento</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="e : ${agendamentos}">
+					<!--Isso representa uma repetição "for" que vai repetir a quantidade de objetos que eu tiver na minha lista chamada de alunos-->
+					<td th:text="${e.id}">1</td>
+					<!-- O valor dos elementos serão substituidos pelo valor que está no banco de dados -->
+					<td th:text="${e.professor}">Felipe</td>
+					<td th:text="${e.chave}">2</td>
+					<td th:text="${e.laboratorio}">2</td>
+					<td th:text="${e.data}">02/01/2024</td>
+					<td th:text="${e.horario}">20h</td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+
+</body>
+
+</html>
