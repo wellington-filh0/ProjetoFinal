@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -271,7 +270,7 @@ public class KeySyncController {
 
 	// ADICIONANDO AGENDAMENTO
 
-	@RequestMapping("/professor/agendamento")
+	@GetMapping("/professor/agendamento")
 	public String agendamento() {
 		return "KeySync/agendamento";
 
