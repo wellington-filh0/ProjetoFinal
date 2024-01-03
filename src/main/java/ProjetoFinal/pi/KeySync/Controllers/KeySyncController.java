@@ -268,7 +268,6 @@ public class KeySyncController {
 		mv.addObject("chaves", chaves);
 		return mv;
 	}
-
 	// ADICIONANDO AGENDAMENTO
 
 	@RequestMapping("/professor/agendamento")
