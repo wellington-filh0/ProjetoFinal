@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -15,7 +16,7 @@ import ProjetoFinal.pi.KeySync.Models.Agendamento;
 import ProjetoFinal.pi.KeySync.Models.Chave;
 import ProjetoFinal.pi.KeySync.Models.Laboratorio;
 import ProjetoFinal.pi.KeySync.Models.Professor;
-import ProjetoFinal.pi.KeySync.Repositories.AgendamentoRepository;
+import ProjetoFinal.pi.KeySync.Repositories.AgendamentoRepositoty;
 import ProjetoFinal.pi.KeySync.Repositories.ChaveRepository;
 import ProjetoFinal.pi.KeySync.Repositories.LaboratorioRepository;
 import ProjetoFinal.pi.KeySync.Repositories.ProfessorRepository;
@@ -30,7 +31,7 @@ public class KeySyncController {
 	@Autowired
 	private ProfessorRepository pr;
 	@Autowired
-	private AgendamentoRepository ar;
+	private AgendamentoRepositoty ar;
 
 	// FAZENDO LOGIN DE UM ADM
 
@@ -267,50 +268,41 @@ public class KeySyncController {
 		mv.addObject("chaves", chaves);
 		return mv;
 	}
+	// ADICIONANDO AGENDAMENTO
 
-	// CRIAR AGENDAMENTO
+	@RequestMapping("/professor/agendamento")
+	public String agendamento() {
+		return "KeySync/agendamento";
 
-	@GetMapping("/professor/agendamento")
-	public String formAgendamento() {
-		return "/KeySync/FormAgendamento";
 	}
 
-	@PostMapping("/professor/agendamento")
-	public String CriarAgendamento(Long idChave, Long idLaboratorio, Long idProfessor, RedirectAttributes attributes) {
-		Optional<Chave> chaveopt = cr.findById(idChave);
-		Optional<Laboratorio> laboratorioopt = lr.findById(idLaboratorio);
-		Optional<Professor> professoropt = pr.findById(idProfessor);
-		
-		Chave chave = chaveopt.get();
-		Laboratorio laboratorio = laboratorioopt.get();
-		Professor professor = professoropt.get();
+	@PostMapping("/professor")
+	public String adicionar(Agendamento agendamento) {
 
-		// CRIAR AGENDAMENTO
-
-		Agendamento agendamento = new Agendamento();
-		agendamento.setChave(chave);
-//		agendamento.setData(null);
-//		agendamento.setHorario(null);
-		agendamento.setLaboratorio(laboratorio);
-		agendamento.setProfessor(professor);
-
+		System.out.println(agendamento);
 		ar.save(agendamento);
-		System.out.println("AGENDAMENTO FINALIZADO");
-		attributes.addFlashAttribute("mensagem", "Agendamento realizado com sucesso!");
-		return "redirect:/KeySync/finalizarAgendamento";
+		return "KeySync/agendamento-adicionado";
 	}
 
-	// LISTANDO EMPRÉSTIMOS
-
-	@GetMapping("/KeySync/finalizarAgendamento")
-	public ModelAndView listarAgendamento() {
-
+	// LISTANDO AGENDAMENTO
+	@GetMapping("/KeySync/lista")
+	public ModelAndView listarA() {
 		List<Agendamento> agendamentos = ar.findAll();
-		ModelAndView mv = new ModelAndView("KeySync/finalizarAgendamento");
-
+		ModelAndView mv = new ModelAndView("/KeySync/lista");
 		mv.addObject("agendamentos", agendamentos);
 		return mv;
+	}
 
+	// APAGANDO AGENDAMENTO
+	@GetMapping("agendamentos/{id}/remover")
+	public String apagarAgendamento(@PathVariable Long id) {
+		Optional<Agendamento> opt = ar.findById(id);
+
+		if (!opt.isEmpty()) {
+			Agendamento agendamento = opt.get();
+			ar.delete(agendamento);
+		}
+		return "redirect:/KeySync/lista";
 	}
 
 }

@@ -16,30 +16,33 @@
 	<div th:replace="~{menu :: menuProf}"></div>
 
 	<div class="container">
-		<h1>Laboratórios</h1>
-
-		<p th:if="${mensagem}" th:text="${mensagem}"></p>
-		
-		<table class="highlight">
-			
+		<h1>Lista de Agendamentos</h1>
+		<table>
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>Disciplina</th>
+					<th>Professor</th>
+					<th>Laboratório</th>
+					<th>Data</th>
+					<th>Horário</th>
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="l : ${laboratorios}"> <!--Isso representa uma repetição "for" que vai repetir a quantidade de objetos que eu tiver na minha lista chamada de alunos--> 
-					<td th:text="${l.id}">1</td> <!-- O valor dos elementos serão substituidos pelo valor que está no banco de dados -->
-					<td th:text="${l.disciplina}">Stephany</td>
-				
+				<tr th:each="a : ${agendamentos}">
+					<td th:text="${a.id}">1</td>
+					<td th:text="${a.professor}">Felipe</td>
+					<td th:text="${a.laboratorio}">Física</td>
+					<td th:text="${a.data}">29/12/2023</td>
+					<td th:text="${a.horario}">20:00</td>
+					<td><a th:href="@{/agendamentos/{id}/remover(id=${a.id})}"><i class="material-icons">delete</i></a></td>
 				</tr>
+
 			</tbody>
-			
 		</table>
 
 	</div>
+
 </body>
 
 </html>

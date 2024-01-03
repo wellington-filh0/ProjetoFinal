@@ -10,40 +10,35 @@
 	rel="stylesheet">
 </head>
 
+
 <body>
-	
-	<div th:replace="~{menu :: menuAdm}"></div>
-	
+
+	<div th:replace="~{menu :: menuProf}"></div>
+
 	<div class="container">
-		
-		<p th:if="${mensagem}" th:text="${mensagem}"></p>
-		
-		<h1>Cadastrar Chave</h1>
-		
-		<form action="/administrador/adicionarProfessor" method="post" th:object="${professor}">
+		<h1>Agendamento de Laboratório</h1>
+
+		<form action='/professor' method='post'>
 			
 			<div>
-				<input type="hidden" th:field="*{id}" readonly="readonly">
+				<label>Professor:</label> <input type="text" name="prof">
 			</div>
 			<div>
-				<label>Nome</label> <input type="text" th:field="*{nome}" required>
+				<label>Laboratório:</label> <input type="text" name="lab">
 			</div>
 			<div>
-				<label>Disciplina</label> <input type="text" th:field="*{disciplina}" required>
+				<label>Data:</label> <input type="text" name="data">
 			</div>
 			<div>
-				<label>Usuário</label> <input type="text" th:field="*{login}" required>
-			</div>
-			<div>
-				<label>Senha</label> <input type="text" th:field="*{senha}" required>
+				<label>Horário:</label> <input type="text" name="horario">
 			</div>
 			<div>
 				<button class="waves-effect waves-light btn" type="submit">Salvar</button>
 				<button class="waves-effect waves-light btn" type="reset">Limpar</button>
 			</div>
-			
+
+
 		</form>
-		
 	</div>
 
 </body>
