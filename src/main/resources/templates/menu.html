@@ -2,12 +2,12 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-	<meta charset="UTF-8">
+<meta charset="UTF-8">
 </head>
 
 <body>
-	
-	<nav th:fragment="menuHome"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+
+	<nav th:fragment="menuHome">
 		<div class="nav-wrapper container">
 			<a href="/" class="brand-logo">KeySync PRO</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
@@ -17,30 +17,32 @@
 		</div>
 	</nav>
 
-	<nav th:fragment="menuAdm"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+	<nav th:fragment="menuAdm">
 		<div>
 			<a href="/" class="brand-logo">KeySync PRO</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
-				<li><a href="/administrador/adicionarLaboratorio">Adicionar Laboratório</a></li>
+				<li><a href="/administrador/adicionarLaboratorio">Adicionar
+						Laboratório</a></li>
 				<li><a href="/administrador/adicionarChave">Adicionar Chave</a></li>
-				<li><a href="/administrador/adicionarProfessor">Adicionar Professor</a></li>
+				<li><a href="/administrador/adicionarProfessor">Adicionar
+						Professor</a></li>
 				<li><a href="/administrador/laboratorios">Laboratórios</a></li>
 				<li><a href="/administrador/chaves">Chaves</a></li>
 				<li><a href="/administrador/professores">Professores</a></li>
 			</ul>
 		</div>
 	</nav>
-	
-	<nav th:fragment="menuProf"> <!--Definindo esse bloco de códigos como fragmentos para que eu posso reutilizá-lo sem precisar reescreve-lo novamente-->
+
+	<nav th:fragment="menuProf">
 		<div class="nav-wrapper container">
 			<a href="/" class="brand-logo">KeySync PRO</a>
 			<ul id="nav-mobile" class="right hide-on-med-and-down">
 				<li><a href="/professor/laboratorios">Laboratórios</a></li>
 				<li><a href="/professor/chaves">Chaves</a></li>
-				<li><a href="">Agendamento</a></li>
+				<li><a th:href="@{/professor/agendamento}">Agendamentos</a></li>
 			</ul>
 		</div>
-	</nav>		
+	</nav>
 
 </body>
 
